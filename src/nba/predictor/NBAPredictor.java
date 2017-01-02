@@ -80,6 +80,7 @@ public class NBAPredictor {
     public static void main(String[] args) throws FileNotFoundException {
         readData(); 
         regressTD();
+        Double[] asd = new Double[15];
     }
     
 }
