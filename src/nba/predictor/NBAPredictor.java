@@ -79,6 +79,12 @@ public class NBAPredictor {
     public static void main(String[] args) throws FileNotFoundException {
         readData(); 
         Double[] rArray = regressTD();
+        //THIS is just to test something else
+        int[] letssee;
+        
+        for(int i = 0; i < 1; i++)
+            if(1 == 1)
+                System.out.println("Do nothing");
         
     }
     
