@@ -59,28 +59,27 @@ public class NBAPredictor {
         
     }
     
-    public static void regressTD(){
-        
+    public static Double[] regressTD(){
+        Double[] toReturn = new Double[15];
         SimpleRegression sr = new SimpleRegression();
         double s = 0;
         for(int x = 2; x < 17; x++){
-        for(int i = 0; i < 30; i++){
-            sr.addData(Double.parseDouble(teams[i][1]), Double.parseDouble(teams[i][x]));
+             for(int i = 0; i < 30; i++){
+                   sr.addData(Double.parseDouble(teams[i][1]), Double.parseDouble(teams[i][x]));
+             }
+        
+               toReturn[x-2] = sr.getR(); 
+               sr.clear();
         }
         
-        s+=sr.getRSquare();
-        System.out.println("THIS: " + s);
-        System.out.println(sr.getRSquare());
-        
-        sr.clear();
-        }
+        return toReturn;
         
         
     }
     public static void main(String[] args) throws FileNotFoundException {
         readData(); 
-        regressTD();
-        Double[] asd = new Double[15];
+        Double[] rArray = regressTD();
+        
     }
     
 }
