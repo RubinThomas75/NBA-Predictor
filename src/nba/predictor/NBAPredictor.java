@@ -22,18 +22,54 @@ public class NBAPredictor {
     /**
      * @param args the command line arguments
      */
-            static String teams[][] = new String[30][21];
+            static String teams[][] = new String[30][17];  //30 Teams, Name + Y + 15 X
+            static String teamRosters[][] = new String[30][11]; //30 Teams, Using top two players of each role
+            
 
     public static void readData() throws FileNotFoundException{
 
         File teamStats = new File("teamStats.txt");
-        Scanner in = new Scanner(teamStats);
+        Scanner in = new Scanner(teamStats);           //Set Scanner for inputting team variables
         
         for(int i = 0; i < 30; i++){
                 String line = in.nextLine();
                 String[] temp = line.split("\\t");
                 configureTeamStats(temp, i);
         }
+        
+        File teamDepth = new File("teamDepth.txt");
+        in = new Scanner(teamDepth);                   //Set Scanner for inputting player Roster
+       
+        for(int i = 0; i < 30; i++){
+            if(teamRosters[i][0] == null)
+                teamRosters[i][0] = in.nextLine();
+                        System.out.println(i);
+
+            System.out.println(teamRosters[i][0]);
+            int counter = 1;
+            for(int x = 0; x < 15; x++){
+                 String line = in.nextLine();               //Estimating only Vital Players, by taking the top two in Each Role
+               
+                 if(line.indexOf("-") == -1){
+                     teamRosters[i+1][0] = line;
+                     break;
+                 }
+                 
+                 String[] temp = line.split("-");
+                 if(temp[0].indexOf("1") != -1 || temp[0].indexOf("2") != -1){
+                     if(counter <= 10)
+                         teamRosters[i][counter] = temp[1];
+                     System.out.println(temp[1] + " " + counter);
+                     counter++;
+                 }
+            }
+            counter = 1;
+        }
+        
+        for(int i = 0; i < 30; i++)
+            for(int x = 0; x < 11; x++){
+                System.out.println(teamRosters[i][x]);
+            }
 
     }
     
@@ -76,15 +112,11 @@ public class NBAPredictor {
         
         
     }
+    
     public static void main(String[] args) throws FileNotFoundException {
         readData(); 
         Double[] rArray = regressTD();
-        //THIS is just to test something else
-        int[] letssee;
-        
-        for(int i = 0; i < 1; i++)
-            if(1 == 1)
-                System.out.println("Do nothing");
+         
         
     }
     
