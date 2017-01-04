@@ -25,7 +25,7 @@ public class NBAPredictor {
      */
             static String teams[][] = new String[30][17];  //30 Teams, Name + Y + 15 X
             static String teamRosters[][] = new String[30][11]; //30 Teams, Using top two players of each role
-            static String playerStats[][] = new String[447][8]; //447 Total Players, 7 Stats of Importance
+            static String playerStats[][] = new String[447][10]; //447 Total Players, 8 Stats of Importance
             static Integer teamAPlayerIndex[] = new Integer[10];
             static Integer teamBPlayerIndex[] = new Integer[10]; 
             
@@ -116,6 +116,7 @@ public class NBAPredictor {
     /*
         Player INDEX       Orig data INDEX
         0 = Player Name    1
+        1 = GamesPlayed    4
         1 = PTS            8
         2 = REB            20
         3 = AST            21
@@ -123,9 +124,10 @@ public class NBAPredictor {
         5 = BLK            24
         6 = TOV            22
         7 = PF             25
+        8 = +/-            28
     */
     
-      Integer[] importantStats = {1,8,20,21,23,24,22,25};
+      Integer[] importantStats = {1,4,8,20,21,23,24,22,25,28};
       int i = 0;
       for(int x: importantStats){
           playerStats[index][i] = temp[x];
@@ -139,7 +141,7 @@ public class NBAPredictor {
         double s = 0;
         for(int x = 2; x < 17; x++){
              for(int i = 0; i < 30; i++){
-                   sr.addData(Double.parseDouble(teams[i][1]), Double.parseDouble(teams[i][x]));
+                   sr.addData(Double.parseDouble(teams[i][x]), Double.parseDouble(teams[i][1]));
              }
         
                toReturn[x-2] = sr.getR(); 
@@ -149,6 +151,24 @@ public class NBAPredictor {
         return toReturn;
         
         
+    }
+    
+    public static Double[] regressPD(){
+        Double[] toReturn = new Double[7];
+        SimpleRegression sr = new SimpleRegression();
+        double s = 0;
+        
+        for(int x = 2; x < 9; x++){
+            for(int i = 0; i <446; i++){
+                if(Integer.parseInt(playerStats[i][1]) > 5)
+                    sr.addData(Double.parseDouble(playerStats[i][x]), Double.parseDouble(playerStats[i][9]));
+            }
+            toReturn[x-2] = sr.getR();
+            sr.clear();
+        
+        }
+
+           return toReturn;
     }
     
     public static Integer[] getPlayerIndex(String team){
@@ -189,12 +209,7 @@ public class NBAPredictor {
                
             }
         }
-        //CreateTeamAIndex
-        //Get A players from Roster, then use thier names to find thier Index on the statistics roster.
-        //GET B players from Roster, then use thier names to find thier Index on the roster
-        
-        //DEAL WITH the 7 DUPLICATE NAMES !!
-        // DEAL WITH THE INITIALS VS FULL NAMES
+
         
         return toReturn;
     }
@@ -220,9 +235,17 @@ public class NBAPredictor {
         teamAPlayerIndex = getPlayerIndex(teamA);        
         
         for(int i: teamAPlayerIndex){
-            System.out.println(i);
+            System.out.println("PLAYER: " + playerStats[i][0] + "\t\t\t" + playerStats[i][9]);
         }
-
+        
+        Double[] one = regressTD();
+        Double[] two = regressPD();
+        
+        for(int i = 0; i < 15; i++)
+            System.out.println(i+2 + "\t" + one[i]);
+        
+        for(int i = 0; i < 7; i++)
+            System.out.println(i+2 + "\t" + two[i]);
             
         //Team STATS - ROSTER FIRST NAME
         //TO PLAYER -- Find NAME From Rost, double check first initial of team name from team stats

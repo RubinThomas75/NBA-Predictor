@@ -234,8 +234,7 @@ PF1-Ja. Green
 PF2-Z. Randolph
 PF3-J. Martin
 C1-M. Gasol
-C2-B. Wright
-C3-D. Davis
+C2-D. Davis
 Miami
 PG1-G. Dragic
 PG2-T. Johnson
