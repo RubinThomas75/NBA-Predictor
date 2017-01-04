@@ -51,13 +51,13 @@ PG1-K. Walker
 PG2-R. Sessions
 PG3-B. Roberts
 SG1-N. Batum
-SG2-M. Belinelli (IL)
+SG2-M. Belinelli
 SG3-J. Lamb
 SG4-A. Harrison
 SF1-M. Kidd-Gilchrist
 SF2-T. Graham
 PF1-M. Williams
-PF2-F. Kaminsky III
+PF2-F. Kaminsky
 PF3-C. Wood
 C1-C. Zeller
 C2-R. Hibbert
@@ -95,7 +95,7 @@ C2-C. Andersen
 Dallas
 PG1-D. Williams
 PG2-D. Harris
-PG3-J. Barea (IL)
+PG3-J. Barea
 PG4-P. Jackson
 SG1-W. Matthews
 SG2-S. Curry
@@ -189,7 +189,7 @@ C1-M. Turner
 C2-A. Jefferson
 C3-K. Seraphin
 LA Clippers
-PG1-C. Paul (IL)
+PG1-C. Paul
 PG2-A. Rivers
 PG3-R. Felton
 SG1-J. Redick
@@ -222,7 +222,7 @@ C2-T. Black
 C3-I. Zubac
 Memphis
 PG1-M. Conley
-PG2-W. Baldwin IV
+PG2-W. Baldwin
 SG1-T. Allen
 SG2-J. Ennis
 SG3-T. Daniels
@@ -239,7 +239,7 @@ C3-D. Davis
 Miami
 PG1-G. Dragic
 PG2-T. Johnson
-SG1-D. Waiters (IL)
+SG1-D. Waiters
 SG2-J. Richardson
 SG3-W. Ellington
 SG4-R. McGruder
@@ -272,7 +272,7 @@ Minnesota
 PG1-R. Rubio
 PG2-K. Dunn
 PG3-T. Jones
-PG4-J. Lucas III
+PG4-J. Lucas
 SG1-Z. LaVine
 SG2-B. Rush
 SF1-A. Wiggins
@@ -302,7 +302,7 @@ C2-A. Ajinca
 New York
 PG1-D. Rose
 PG2-B. Jennings
-SG1-C. Lee (IL)
+SG1-C. Lee
 SG2-S. Vujacic
 SG3-J. Holiday
 SG4-R. Baker
@@ -335,7 +335,7 @@ Orlando
 PG1-E. Payton
 PG2-C. Watson
 PG3-D. Augustin
-SG1-E. Fournier (IL)
+SG1-E. Fournier
 SG2-J. Meeks
 SG3-C. Wilcox
 SF1-A. Gordon
@@ -357,10 +357,10 @@ SG3-T. Luwawu-Cabarrot
 SF1-R. Covington
 SF2-H. Thompson
 PF1-D. Saric
-PF2-R. Holmes (IL)
+PF2-R. Holmes
 PF3-E. Ilyasova
 PF4-N. Noel
-PF5-B. Simmons (IL)
+PF5-B. Simmons
 C1-J. Embiid
 C2-J. Okafor
 Phoenix
@@ -465,9 +465,9 @@ SG1-B. Beal
 SG2-T. Satoransky
 SG3-M. Thornton
 SG4-S. McClellan
-SF1-O. Porter Jr.
+SF1-O. Porter 
 SF2-K. Oubre Jr.
-SF3-D. House Jr.
+SF3-D. House 
 PF1-M. Morris
 PF2-J. Smith
 PF3-A. Nicholson

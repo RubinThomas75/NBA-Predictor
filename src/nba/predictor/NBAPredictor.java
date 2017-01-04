@@ -149,6 +149,11 @@ public class NBAPredictor {
         
     }
     
+    public static void getPlayerIndex(String A, String B){
+        String[] temp = A.split(" ");
+        System.out.println(temp.length);
+    }
+    
     public static void main(String[] args) throws FileNotFoundException {
         readData(); 
         Double[] rArray = regressTD();
@@ -158,13 +163,18 @@ public class NBAPredictor {
         for(int i = 0; i < 30; i++){
             for(int j = 0; j < 11; j++){
                 if(!set.add(teamRosters[i][j]))
-                //    System.out.println(teamRosters[i][j]);
+                    System.out.println(teamRosters[i][j]);
             }
         }
         
         
         //Heres where I will Prompt input for Team 1 and Team 2
         //Now I need to collect the data for team 1 and team 2
+        String teamA = "THIS IS THREE TRSH";
+        String teamB = "Golden State";
+        getPlayerIndex(teamA, teamB);
+        //Example Say you want NYK and GOLDENSTATE
+        
         
         //Team STATS - ROSTER FIRST NAME
         //TO PLAYER -- Find NAME From Rost, double check first initial of team name from team stats
