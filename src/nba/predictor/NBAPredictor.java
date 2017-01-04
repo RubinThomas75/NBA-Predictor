@@ -26,6 +26,8 @@ public class NBAPredictor {
             static String teams[][] = new String[30][17];  //30 Teams, Name + Y + 15 X
             static String teamRosters[][] = new String[30][11]; //30 Teams, Using top two players of each role
             static String playerStats[][] = new String[447][8]; //447 Total Players, 7 Stats of Importance
+            static Integer teamAPlayerIndex[] = new Integer[10];
+            static Integer teamBPlayerIndex[] = new Integer[10]; 
             
 
     public static void readData() throws FileNotFoundException{
@@ -149,16 +151,59 @@ public class NBAPredictor {
         
     }
     
-    public static void getPlayerIndex(String A, String B){
-        String[] temp = A.split(" ");
-        System.out.println(temp.length);
+    public static Integer[] getPlayerIndex(String team){
+        
+        Integer[] toReturn = new Integer[10];
+        String cityTeam = "";
+        String[] temp = team.split(" ");
+        if(temp.length == 2)
+            cityTeam = temp[0];
+        else if(temp.length == 3)
+            cityTeam = temp[0] + " " + temp[1];
+        
+        
+        int teamIndex = 0;
+        for(int i = 0; i < 30; i++){
+            if(cityTeam.equals(teamRosters[i][0]))
+                teamIndex = i;
+        }
+        
+        int oneOrTwo = 0;
+        for(int x = 1; x < 11; x++){
+            String temp2[] = teamRosters[teamIndex][x].split(" ");
+            oneOrTwo = temp2[0].length() - 1;
+            
+            String nameToCheck = temp2[0] + " " +  temp2[1];
+            for(int i = 0; i <446; i++){
+               String temp3[] = playerStats[i][0].split(" |-");
+               if(temp3.length == 1)
+                  continue;
+               if(temp3[0].length() < oneOrTwo)
+                   continue;
+               
+               String firstInitial = temp3[0].substring(0, oneOrTwo);
+               String fullName = firstInitial + ". " + temp3[1];
+                       
+               if(fullName.equals(nameToCheck))
+                   toReturn[x-1] = i;
+               
+            }
+        }
+        //CreateTeamAIndex
+        //Get A players from Roster, then use thier names to find thier Index on the statistics roster.
+        //GET B players from Roster, then use thier names to find thier Index on the roster
+        
+        //DEAL WITH the 7 DUPLICATE NAMES !!
+        // DEAL WITH THE INITIALS VS FULL NAMES
+        
+        return toReturn;
     }
     
     public static void main(String[] args) throws FileNotFoundException {
         readData(); 
         Double[] rArray = regressTD();
         
-        //Duplicate Check using Hash Map
+        /*Duplicate Check using Hash Map
         HashSet<String> set = new HashSet<String>();
         for(int i = 0; i < 30; i++){
             for(int j = 0; j < 11; j++){
@@ -166,16 +211,19 @@ public class NBAPredictor {
                     System.out.println(teamRosters[i][j]);
             }
         }
+        */
         
         
         //Heres where I will Prompt input for Team 1 and Team 2
         //Now I need to collect the data for team 1 and team 2
-        String teamA = "THIS IS THREE TRSH";
-        String teamB = "Golden State";
-        getPlayerIndex(teamA, teamB);
-        //Example Say you want NYK and GOLDENSTATE
+        String teamA = "Golden State Warriors";
+        teamAPlayerIndex = getPlayerIndex(teamA);        
         
-        
+        for(int i: teamAPlayerIndex){
+            System.out.println(i);
+        }
+
+            
         //Team STATS - ROSTER FIRST NAME
         //TO PLAYER -- Find NAME From Rost, double check first initial of team name from team stats
         

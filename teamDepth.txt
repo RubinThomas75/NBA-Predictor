@@ -80,7 +80,7 @@ C2-C. Felicio
 Cleveland
 PG1-K. Irving
 PG2-K. Felder
-SG1-J. Smith
+SG1-JR. Smith
 SG2-I. Shumpert
 SG3-J. McRae
 SG4-D. Liggins
@@ -98,7 +98,7 @@ PG2-D. Harris
 PG3-J. Barea
 PG4-P. Jackson
 SG1-W. Matthews
-SG2-S. Curry
+SG2-Se. Curry
 SG3-N. Brussino
 SF1-H. Barnes
 SF2-J. Anderson
@@ -131,7 +131,7 @@ PG3-B. Udrih
 SG1-K. Caldwell-Pope
 SG2-D. Hilliard
 SG3-M. Gbinije
-SF1-M. Morris
+SF1-Marc. Morris
 SF2-S. Johnson
 SF3-R. Bullock
 PF1-T. Harris
@@ -141,14 +141,14 @@ C1-A. Drummond
 C2-A. Baynes
 C3-B. Marjanovic
 Golden State
-PG1-S. Curry
+PG1-St. Curry
 PG2-S. Livingston
 SG1-K. Thompson
 SG2-I. Clark
 SG3-P. McCaw
 SF1-K. Durant
 SF2-A. Iguodala
-PF1-D. Green
+PF1-Dr. Green
 PF2-K. Looney
 PF3-D. West
 PF4-J. McAdoo
@@ -179,7 +179,7 @@ PG4-J. Young
 SG1-M. Ellis
 SG2-R. Stuckey
 SF1-P. George
-SF2-C. Miles
+SF2-CJ. Miles
 SF3-G. Robinson III
 SF4-G. Niang
 PF1-T. Young
@@ -204,7 +204,7 @@ PF3-B. Johnson
 C1-D. Jordan
 C2-M. Speights
 C3-D. Stone
-LA Lakers
+Los Angeles
 PG1-D. Russell
 PG2-M. Huertas
 PG3-J. Calderon
@@ -230,7 +230,7 @@ SG4-A. Harrison
 SF1-C. Parsons
 SF2-V. Carter
 SF3-T. Williams
-PF1-J. Green
+PF1-Ja. Green
 PF2-Z. Randolph
 PF3-J. Martin
 C1-M. Gasol
@@ -244,7 +244,7 @@ SG2-J. Richardson
 SG3-W. Ellington
 SG4-R. McGruder
 SF1-J. Winslow
-SF2-J. Johnson
+SF2-Ja. Johnson
 SF3-L. Babbitt
 PF1-L. Babbitt
 PF2-U. Haslem
@@ -265,7 +265,7 @@ SF2-M. Beasley
 SF3-S. Novak
 PF1-J. Henson
 PF2-M. Teletovic
-C1-M. Plumlee
+C1-Mi. Plumlee
 C2-G. Monroe
 C3-T. Maker
 Minnesota
@@ -314,7 +314,7 @@ PF2-M. Ndour
 C1-J. Noah
 C2-K. O'Quinn
 C3-W. Hernangomez
-C4-M. Plumlee
+C4-Mar. Plumlee
 Oklahoma City
 PG1-R. Westbrook
 PG2-S. Christon
@@ -334,7 +334,7 @@ C3-J. Lauvergne
 Orlando
 PG1-E. Payton
 PG2-C. Watson
-PG3-D. Augustin
+PG3-D. AugustinA
 SG1-E. Fournier
 SG2-J. Meeks
 SG3-C. Wilcox
@@ -342,14 +342,14 @@ SF1-A. Gordon
 SF2-M. Hezonja
 SF3-D. Rudez
 PF1-S. Ibaka
-PF2-J. Green
+PF2-Je. Green
 PF3-A. Onuaku
 C1-N. Vucevic
 C2-B. Biyombo
 C3-S. Zimmerman
 Philadelphia
 PG1-S. Rodriguez
-PG2-T. McConnell
+PG2-TJ. McConnell
 PG3-J. Bayless
 SG1-G. Henderson
 SG2-N. Stauskas
@@ -392,7 +392,7 @@ SF3-J. Layman
 PF1-A. Aminu
 PF2-E. Davis
 PF3-N. Vonleh
-C1-M. Plumlee
+C1-Mas. Plumlee
 C2-M. Leonard
 C3-F. Ezeli
 Sacramento
@@ -415,7 +415,7 @@ San Antonio
 PG1-T. Parker
 PG2-P. Mills
 PG3-D. Murray
-SG1-D. Green
+SG1-Da. Green
 SG2-M. Ginobili
 SG3-J. Simmons
 SG4-B. Forbes
@@ -468,8 +468,8 @@ SG4-S. McClellan
 SF1-O. Porter 
 SF2-K. Oubre Jr.
 SF3-D. House 
-PF1-M. Morris
-PF2-J. Smith
+PF1-Mark. Morris
+PF2-Ja. Smith
 PF3-A. Nicholson
 C1-M. Gortat
 C2-I. Mahinmi
