@@ -134,7 +134,10 @@ public class NBAPredictor {
           i++;
       }
     }
-    
+    /*
+        Method to regress team statistics on win% to discover correlation coef R
+        @Return double[] holding coef
+    */
     public static Double[] regressTD(){
         Double[] toReturn = new Double[15];
         SimpleRegression sr = new SimpleRegression();
@@ -152,7 +155,11 @@ public class NBAPredictor {
         
         
     }
-    
+    /*
+        Method to regress player statistics on individual +/-  score
+        Condition that they have participated in > 5 games
+        @return double[] holding coef
+    */
     public static Double[] regressPD(){
         Double[] toReturn = new Double[7];
         SimpleRegression sr = new SimpleRegression();
@@ -247,8 +254,7 @@ public class NBAPredictor {
         for(int i = 0; i < 7; i++)
             System.out.println(i+2 + "\t" + two[i]);
             
-        //Team STATS - ROSTER FIRST NAME
-        //TO PLAYER -- Find NAME From Rost, double check first initial of team name from team stats
+
         
         
         
