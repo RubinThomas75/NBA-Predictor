@@ -79,6 +79,42 @@ public class NBAPredictor {
              String[] temp = line.split("\\t");
              configurePlayerStats(temp, i);
          }
+         
+         //READING IN PLAYER PER
+         File PERStat = new File("samplePER.txt");
+         in = new Scanner(PERStat);
+         
+         String[][] PER = new String[100][2];
+         for(int i = 0; i < 99; i++){
+             String line = in.nextLine();
+             String[] temp = line.split("\\t");
+             PER[i][0] = temp[1];
+             PER[i][1] = temp[11];
+         }
+         
+         Integer[] indexArrayTest = new Integer[99];
+         for(int x = 0; x < 99; x++){
+            for(int i = 0; i < 446; i++){
+              if(PER[x][0].equals(playerStats[i][0])){
+                  indexArrayTest[x] = i;
+              }
+            }
+            if(indexArrayTest[x] == null){
+                System.out.println(PER[x][0]);
+            }
+         }
+         
+         SimpleRegression sr = new SimpleRegression();
+         int Counter = 0;
+         
+         for(int i: indexArrayTest){
+             sr.addData(Double.parseDouble(playerStats[i][1]), Double.parseDouble(PER[Counter][1]));
+             Counter++;
+         }
+         
+         System.out.println(sr.getR());
+         
+         
         
     }
     
@@ -141,7 +177,6 @@ public class NBAPredictor {
     public static Double[] regressTD(){
         Double[] toReturn = new Double[15];
         SimpleRegression sr = new SimpleRegression();
-        double s = 0;
         for(int x = 2; x < 17; x++){
              for(int i = 0; i < 30; i++){
                    sr.addData(Double.parseDouble(teams[i][x]), Double.parseDouble(teams[i][1]));
@@ -242,18 +277,18 @@ public class NBAPredictor {
         teamAPlayerIndex = getPlayerIndex(teamA);        
         
         for(int i: teamAPlayerIndex){
-            System.out.println("PLAYER: " + playerStats[i][0] + "\t\t\t" + playerStats[i][9]);
+           // System.out.println("PLAYER: " + playerStats[i][0] + "\t\t\t" + playerStats[i][9]);
         }
         
         Double[] one = regressTD();
         Double[] two = regressPD();
-        
+        /*
         for(int i = 0; i < 15; i++)
             System.out.println(i+2 + "\t" + one[i]);
         
         for(int i = 0; i < 7; i++)
             System.out.println(i+2 + "\t" + two[i]);
-            
+            */
 
         
         
