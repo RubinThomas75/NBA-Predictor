@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Scanner;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+import java.lang.Math;
 
 
 
@@ -79,42 +80,7 @@ public class NBAPredictor {
              String[] temp = line.split("\\t");
              configurePlayerStats(temp, i);
          }
-         
-         //READING IN PLAYER PER
-         File PERStat = new File("samplePER.txt");
-         in = new Scanner(PERStat);
-         
-         String[][] PER = new String[100][2];
-         for(int i = 0; i < 99; i++){
-             String line = in.nextLine();
-             String[] temp = line.split("\\t");
-             PER[i][0] = temp[1];
-             PER[i][1] = temp[11];
-         }
-         
-         Integer[] indexArrayTest = new Integer[99];
-         for(int x = 0; x < 99; x++){
-            for(int i = 0; i < 446; i++){
-              if(PER[x][0].equals(playerStats[i][0])){
-                  indexArrayTest[x] = i;
-              }
-            }
-            if(indexArrayTest[x] == null){
-                System.out.println(PER[x][0]);
-            }
-         }
-         
-         SimpleRegression sr = new SimpleRegression();
-         int Counter = 0;
-         
-         for(int i: indexArrayTest){
-             sr.addData(Double.parseDouble(playerStats[i][1]), Double.parseDouble(PER[Counter][1]));
-             Counter++;
-         }
-         
-         System.out.println(sr.getR());
-         
-         
+       
         
     }
     
@@ -177,9 +143,47 @@ public class NBAPredictor {
     public static Double[] regressTD(){
         Double[] toReturn = new Double[15];
         SimpleRegression sr = new SimpleRegression();
+        
+        //Y Statistics
+        double sum = 0, ySD = 0, ymean = 0;
+             for(int i = 0; i < 30; i++)
+                 sum+= Double.parseDouble(teams[i][1]);
+             
+        ymean = sum/30;
+        sum = 0;
+        
+            for(int i = 0; i < 30; i++)
+                sum += Math.pow(Double.parseDouble(teams[i][1]) - ymean, 2);
+        
+        ySD = sum/30;
+        ySD = Math.sqrt(ySD);
+        System.out.println("Y = " + ymean + " " + ySD);
+        
+        //X Statistics
+        Double[][] xStats = new Double[15][2];
+        sum = 0;
+        
+        for(int x = 2; x < 17; x++){
+            
+            for(int i = 0; i < 30; i++)
+                sum += Double.parseDouble(teams[i][x]);
+            
+            xStats[x-2][0] = sum/30; //MEAN
+            sum = 0;
+            
+            for(int i = 0; i <30; i++)
+                sum += Math.pow(Double.parseDouble(teams[i][x]) - xStats[x-2][0], 2);
+            
+            xStats[x-2][1] = sum/30; //SD
+            xStats[x-2][1] = Math.sqrt(xStats[x-2][1]);
+            
+            System.out.println(x + "  = " + xStats[x-2][0] + " " + xStats[x-2][1]);
+        }
+        
+            
         for(int x = 2; x < 17; x++){
              for(int i = 0; i < 30; i++){
-                   sr.addData(Double.parseDouble(teams[i][x]), Double.parseDouble(teams[i][1]));
+                   sr.addData((Double.parseDouble(teams[i][x]) - xStats[x-2][0])/xStats[x-2][1], (Double.parseDouble(teams[i][1]) - ymean)/ySD);
              }
         
                toReturn[x-2] = sr.getR(); 
@@ -282,13 +286,13 @@ public class NBAPredictor {
         
         Double[] one = regressTD();
         Double[] two = regressPD();
-        /*
+        
         for(int i = 0; i < 15; i++)
             System.out.println(i+2 + "\t" + one[i]);
         
         for(int i = 0; i < 7; i++)
             System.out.println(i+2 + "\t" + two[i]);
-            */
+            
 
         
         
