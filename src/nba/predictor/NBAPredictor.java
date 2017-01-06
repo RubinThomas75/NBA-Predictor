@@ -144,46 +144,23 @@ public class NBAPredictor {
         Double[] toReturn = new Double[15];
         SimpleRegression sr = new SimpleRegression();
         
-        //Y Statistics
-        double sum = 0, ySD = 0, ymean = 0;
+        /*
+        double ysum = 0, ySD = 0, ymean = 0;
              for(int i = 0; i < 30; i++)
-                 sum+= Double.parseDouble(teams[i][1]);
+                 ysum+= Double.parseDouble(teams[i][1]);
              
-        ymean = sum/30;
-        sum = 0;
+        ymean = ysum/30;
+        ysum = 0;
         
             for(int i = 0; i < 30; i++)
-                sum += Math.pow(Double.parseDouble(teams[i][1]) - ymean, 2);
+                ysum += Math.pow(Double.parseDouble(teams[i][1]) - ymean, 2);
         
-        ySD = sum/30;
-        ySD = Math.sqrt(ySD);
-        System.out.println("Y = " + ymean + " " + ySD);
-        
-        //X Statistics
-        Double[][] xStats = new Double[15][2];
-        sum = 0;
-        
-        for(int x = 2; x < 17; x++){
-            
-            for(int i = 0; i < 30; i++)
-                sum += Double.parseDouble(teams[i][x]);
-            
-            xStats[x-2][0] = sum/30; //MEAN
-            sum = 0;
-            
-            for(int i = 0; i <30; i++)
-                sum += Math.pow(Double.parseDouble(teams[i][x]) - xStats[x-2][0], 2);
-            
-            xStats[x-2][1] = sum/30; //SD
-            xStats[x-2][1] = Math.sqrt(xStats[x-2][1]);
-            
-            System.out.println(x + "  = " + xStats[x-2][0] + " " + xStats[x-2][1]);
-        }
-        
+        ySD = ysum/30;        
+       */
             
         for(int x = 2; x < 17; x++){
              for(int i = 0; i < 30; i++){
-                   sr.addData((Double.parseDouble(teams[i][x]) - xStats[x-2][0])/xStats[x-2][1], (Double.parseDouble(teams[i][1]) - ymean)/ySD);
+                 sr.addData(Double.parseDouble(teams[i][x]), Double.parseDouble(teams[i][1]));
              }
         
                toReturn[x-2] = sr.getR(); 
