@@ -219,8 +219,7 @@ public class NBAPredictor {
             String nameToCheck = temp2[0] + " " +  temp2[1];
             for(int i = 0; i <446; i++){
                String temp3[] = playerStats[i][0].split(" |-");
-               if(temp3.length == 1)
-                  continue;
+               
                if(temp3[0].length() < oneOrTwo)
                    continue;
                
@@ -255,6 +254,17 @@ public class NBAPredictor {
             toSort[saveI][1] = Double.toString(0);
         }
         return newTeamScore;
+    }
+    
+    public static String[][] scorePlayers(){
+        String playerScores[][] = new String[30][2];
+        for(int i = 0; i < 30; i++){
+            Integer x[] = getPlayerIndex(teams[i][0]);
+            playerScores[i][0] = teams[i][0];
+            playerScores[i][1] = Double.toString(getPlayerScore(x));
+        }
+        playerScores = sort(playerScores);
+        return playerScores;
     }
     
     public static String[][] scoreTeams(){
@@ -293,13 +303,11 @@ public class NBAPredictor {
     public static void main(String[] args) throws FileNotFoundException {
         readData(); 
         String[][] teamScore = scoreTeams();
+        String[][] playerScore = scorePlayers();
         
-        String teamA = "New York Knicks";
-        String teamB = "New York Knicks";
-        teamAPlayerIndex = getPlayerIndex(teamA);    
-        teamBPlayerIndex = getPlayerIndex(teamB);
 
-        System.out.println(getPlayerScore(teamAPlayerIndex));
+       
+        
         /*Duplicate Check using Hash Map
         HashSet<String> set = new HashSet<String>();
         for(int i = 0; i < 30; i++){
@@ -315,10 +323,7 @@ public class NBAPredictor {
         //Now I need to collect the data for team 1 and team 2
     
         
-        for(int i: teamAPlayerIndex){
-           // System.out.println("PLAYER: " + playerStats[i][0] + "\t\t\t" + playerStats[i][9]);
-        }
-        
+
 
             
 
