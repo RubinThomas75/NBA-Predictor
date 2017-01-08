@@ -261,14 +261,19 @@ public class NBAPredictor {
            // System.out.println("PLAYER: " + playerStats[i][0] + "\t\t\t" + playerStats[i][9]);
         }
         
+        String teamScore[][] = new String[30][2];
         Double[] one = regressTD();
         Double[] two = regressPD();
-        
-        for(int i = 0; i < 15; i++)
-            System.out.println(i+2 + "\t" + one[i]);
-        
-        for(int i = 0; i < 7; i++)
-            System.out.println(i+2 + "\t" + two[i]);
+        for(int i = 0; i < 30; i++){
+            teamScore[i][0] = teams[i][0];
+            double score = 0;
+            for(int x = 2; x < 17; x++){
+                score+= one[x - 2]*Double.parseDouble(teams[i][x]);
+            }
+            teamScore[i][1] = Double.toString(score);
+            
+            System.out.println("Team: " + teamScore[i][0] + "\t\t  Score: " + teamScore[i][1]);
+        }
             
 
         
