@@ -119,14 +119,14 @@ public class NBAPredictor {
         Player INDEX       Orig data INDEX
         0 = Player Name    1
         1 = GamesPlayed    4
-        1 = PTS            8
-        2 = REB            20
-        3 = AST            21
-        4 = STL            23
-        5 = BLK            24
-        6 = TOV            22
-        7 = PF             25
-        8 = +/-            28
+        2 = PTS            8
+        3 = REB            20
+        4 = AST            21
+        5 = STL            23
+        6 = BLK            24
+        7 = TOV            22
+        8 = PF             25
+        9 = +/-            28
     */
     
       Integer[] importantStats = {1,4,8,20,21,23,24,22,25,28};
@@ -257,11 +257,10 @@ public class NBAPredictor {
         return newTeamScore;
     }
     
-    public static void scoreTeams(){
+    public static String[][] scoreTeams(){
         String teamScore[][] = new String[30][2];
         
         Double[] one = regressTD();
-        Double[] two = regressPD();
         
         for(int i = 0; i < 30; i++){
             teamScore[i][0] = teams[i][0];
@@ -274,15 +273,33 @@ public class NBAPredictor {
             teamScore[i][1] = Double.toString(score);
         }
         teamScore = sort(teamScore);
-        for(int i = 0; i < 30; i++)
-            System.out.println("Teams: " + teamScore[i][0] + " \t\t Score: " + teamScore[i][1]);
+        return teamScore;
+    }
+    
+    public static double getPlayerScore(Integer[] teamIndex){
+        Double[] two = regressPD();
+        double sum = 0;
+        for(int x :teamIndex)
+            for(int i = 0; i < 7; i++){
+             if(i < 5)
+                sum += two[i]*Double.parseDouble(playerStats[x][i+2]);    //add positive stats
+             else
+                 sum-= two[i]*Double.parseDouble(playerStats[x][i+2]);     //Subtract TOV and PF
+        }
+        
+        return sum;
     }
     
     public static void main(String[] args) throws FileNotFoundException {
         readData(); 
-        scoreTeams();
+        String[][] teamScore = scoreTeams();
         
-        
+        String teamA = "New York Knicks";
+        String teamB = "New York Knicks";
+        teamAPlayerIndex = getPlayerIndex(teamA);    
+        teamBPlayerIndex = getPlayerIndex(teamB);
+
+        System.out.println(getPlayerScore(teamAPlayerIndex));
         /*Duplicate Check using Hash Map
         HashSet<String> set = new HashSet<String>();
         for(int i = 0; i < 30; i++){
@@ -296,8 +313,7 @@ public class NBAPredictor {
         
         //Heres where I will Prompt input for Team 1 and Team 2
         //Now I need to collect the data for team 1 and team 2
-        String teamA = "Golden State Warriors";
-        teamAPlayerIndex = getPlayerIndex(teamA);        
+    
         
         for(int i: teamAPlayerIndex){
            // System.out.println("PLAYER: " + playerStats[i][0] + "\t\t\t" + playerStats[i][9]);
