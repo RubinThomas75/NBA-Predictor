@@ -305,6 +305,7 @@ public class NBAPredictor {
         String[][] teamScore = scoreTeams();
         String[][] playerScore = scorePlayers();
         
+        
 
        
         
@@ -322,11 +323,31 @@ public class NBAPredictor {
         //Heres where I will Prompt input for Team 1 and Team 2
         //Now I need to collect the data for team 1 and team 2
     
+        String teamA = "Toronto Raptors";
+        String teamB = "LA Clippers";
+        int teamAx = 0, teamBx = 0;
+        int teamAy = 0, teamBy = 0;
         
-
-
+        for(int i = 0; i < 30; i++){
+            if(teamScore[i][0].equals(teamA))
+                teamAx = i;
+            else if(teamScore[i][0].equals(teamB))
+                teamBx = i;
             
+            if(playerScore[i][0].equals(teamA))
+                teamAy = i;
+            else if(playerScore[i][0].equals(teamB))
+                teamBy = i;
+            
+        }
+        
+        System.out.println(teamAy + " " + teamBy);
+        boolean strongerTeam = false;
+        
+        if(teamAx > teamBx)
+            strongerTeam = true;
 
+        
         
         
         
