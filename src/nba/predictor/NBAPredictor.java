@@ -292,7 +292,7 @@ public class NBAPredictor {
         for(int x :teamIndex)
             for(int i = 0; i < 7; i++){
              if(i < 5)
-                sum += two[i]*Double.parseDouble(playerStats[x][i+2]);    //add positive stats
+                sum += two[i]*(Double.parseDouble(playerStats[x][i+2]));    //add positive stats
              else
                  sum-= two[i]*Double.parseDouble(playerStats[x][i+2]);     //Subtract TOV and PF
         }
@@ -323,8 +323,9 @@ public class NBAPredictor {
         //Heres where I will Prompt input for Team 1 and Team 2
         //Now I need to collect the data for team 1 and team 2
     
-        String teamA = "Toronto Raptors";
-        String teamB = "LA Clippers";
+        String teamA = "Oklahoma City Thunder";
+        String teamB = "Memphis Grizzlies";
+        
         int teamAx = 0, teamBx = 0;
         int teamAy = 0, teamBy = 0;
         
@@ -340,12 +341,36 @@ public class NBAPredictor {
                 teamBy = i;
             
         }
+       
+        int teamDiff = teamAx - teamBx;
+        int playerDiff = teamAy - teamBy;
         
-        System.out.println(teamAy + " " + teamBy);
-        boolean strongerTeam = false;
+        double teamProb = 50 + (teamDiff * 1.7);
+        double playerProb = 50 + (playerDiff * 1.7);
         
-        if(teamAx > teamBx)
-            strongerTeam = true;
+        System.out.println("According to current team statistics, The " + teamA + " has a " + teamProb + "% Chance of winning");
+        System.out.println("According to current player statistics, The " + teamA + " has a " + playerProb + "% Chance of winning");
+        
+        double lastProb = (teamProb + playerProb)/2;
+        
+        boolean win = false;
+        if(lastProb < 50)
+            win = false;
+        else
+            win = true;
+        
+        if(win == true)
+            System.out.println("I predict The " + teamA + " will win with " + lastProb +"% confidence");
+        else
+            System.out.println("I predict the " + teamB + " will win with " + (100.0 - lastProb) +"% confidence");
+            
+        
+        
+        
+        
+      ////  **try multiplying by 1.7
+      
+      
 
         
         
