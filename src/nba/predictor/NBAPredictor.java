@@ -34,7 +34,7 @@ public class NBAPredictor {
     public static void readData() throws FileNotFoundException{
 
        //READING IN TEAM STATISTICS *******************************************************************
-        File teamStats = new File("teamStats.txt");
+        File teamStats = new File("data/teamStats.txt");
         Scanner in = new Scanner(teamStats);           //Set Scanner for inputting team variables
         
         for(int i = 0; i < 30; i++){
@@ -45,7 +45,7 @@ public class NBAPredictor {
         
         
         //READING IN PLAYER ROSTERS **************************************************************************
-        File teamDepth = new File("teamDepth.txt");
+        File teamDepth = new File("data/teamDepth.txt");
         in = new Scanner(teamDepth);                   //Set Scanner for inputting player Roster
        
         for(int i = 0; i < 30; i++){
@@ -72,7 +72,7 @@ public class NBAPredictor {
         }
         
          //READING IN PLAYER STATISTICS *************************************************************************
-         File playerStat = new File("playerStats.txt");
+         File playerStat = new File("data/playerStats.txt");
          in = new Scanner(playerStat);
          
          for(int i = 0; i < 446; i++){
