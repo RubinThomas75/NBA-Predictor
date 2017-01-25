@@ -12,11 +12,16 @@ import java.util.HashSet;
 import java.util.Scanner;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import java.lang.Math;
+import java.util.ArrayList;
 
 //Quick GUI stuff
 import javafx.stage.Stage;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 
 
@@ -34,6 +39,7 @@ public class NBAPredictor extends Application{
             static String playerStats[][] = new String[447][10]; //447 Total Players, 8 Stats of Importance
             static Integer teamAPlayerIndex[] = new Integer[10];
             static Integer teamBPlayerIndex[] = new Integer[10]; 
+            static ArrayList<String> teamList = new ArrayList<String>();
             
 
     public static void readData() throws FileNotFoundException{
@@ -243,7 +249,6 @@ public class NBAPredictor extends Application{
     
     public static String[][] sort(String[][] toSort){
         String[][] newTeamScore = new String[30][2];
-        
 
         for(int x = 0; x < 30; x++){
              double currmax = 0;
@@ -313,8 +318,43 @@ public class NBAPredictor extends Application{
     public void start(Stage primaryStage) throws Exception{
        primaryStage.setTitle("NBA - Predictor");         
        primaryStage.show(); 
+       
+       Pane mainPane = new Pane();
+       Label awayTeam = new Label("Away Team");
+       Label homeTeam = new Label("Home Team");
+       
+       readInTeamList();  //to Populate choiceboxes
+       
+        ChoiceBox<String> awayTeams = new ChoiceBox<>();
+        awayTeams.getItems().addAll(teamList);
+        
+        ChoiceBox<String> homeTeams = new ChoiceBox<>();
+        homeTeams.getItems().addAll(teamList);
+        
+        awayTeams.setTranslateX(100);
+        awayTeams.setTranslateY(100);
+        homeTeams.setTranslateX(300);
+        homeTeams.setTranslateY(100);
+        
+        
+        
+        mainPane.getChildren().addAll(awayTeams, homeTeams);
+        Scene mainScene = new Scene(mainPane, 1000, 1000);
+        
+        primaryStage.setScene(mainScene);
+                
     }
     
+    public void readInTeamList() throws FileNotFoundException{
+        File teamListFile = new File("data/teamList.txt");
+        Scanner in = new Scanner(teamListFile);           //Set Scanner for inputting team variables
+        
+        for(int i = 0; i < 30; i++){
+            String line = in.nextLine();
+            teamList.add(line);
+        }
+      
+    }
     
     public static void calculate()  throws FileNotFoundException {
         readData(); 
