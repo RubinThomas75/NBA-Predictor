@@ -13,13 +13,18 @@ import java.util.Scanner;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import java.lang.Math;
 
+//Quick GUI stuff
+import javafx.stage.Stage;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+
 
 
 /**
  *
  * @author rubin
  */
-public class NBAPredictor {
+public class NBAPredictor extends Application{
 
     /**
      * @param args the command line arguments
@@ -300,14 +305,21 @@ public class NBAPredictor {
         return sum;
     }
     
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args)  throws FileNotFoundException {
+      launch(args);
+    }
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+       primaryStage.setTitle("NBA - Predictor");         
+       primaryStage.show(); 
+    }
+    
+    
+    public static void calculate()  throws FileNotFoundException {
         readData(); 
         String[][] teamScore = scoreTeams();
-        String[][] playerScore = scorePlayers();
-        
-        
-
-       
+        String[][] playerScore = scorePlayers();       
         
         /*Duplicate Check using Hash Map
         HashSet<String> set = new HashSet<String>();
@@ -321,8 +333,8 @@ public class NBAPredictor {
         
         
         //Heres where I will Prompt input for Team 1 and Team 2
-        //Now I need to collect the data for team 1 and team 2
-    
+        //Now I need to collect the data for team 1 and team 2\
+        
         String teamA = "Oklahoma City Thunder";
         String teamB = "Memphis Grizzlies";
         
@@ -370,12 +382,5 @@ public class NBAPredictor {
         
       ////  **try multiplying by 1.7
       
-      
-
-        
-        
-        
-        
     }
-    
 }
