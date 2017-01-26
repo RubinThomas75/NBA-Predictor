@@ -8,6 +8,7 @@ package nba.predictor;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 //JSOUP stuff
@@ -27,14 +28,31 @@ public class scraper {
     /**
      * @param args the command line arguments
      */
-    
+    String teamAbv;
+    double roadPerc;
+    ArrayList<String> awayOrHome = new ArrayList<String>();
+    ArrayList<String> winloss = new ArrayList<String>();
+
     public scraper(){};
-    public scraper(String teamName, List teamList, List abv){
-        String teamAbv = (String)abv.get(teamList.indexOf(teamName));
-        
+    
+    public scraper(String teamName, List teamList, List abv) throws IOException{
+        teamAbv = (String)abv.get(teamList.indexOf(teamName));
+        Document doc = parseHTML();
+        roadPerc = calc(doc);
     }
     
+    public Document parseHTML() throws IOException{
+        String URL = "http://www.basketball-reference.com/teams/" + teamAbv + "/2017/gamelog/";
+
+        Document doc;
+        doc = Jsoup.connect(URL).get();
+        return doc;
+    }
     
+    public double calc(Document doc){
+        
+        return 0;
+    }
     
     public static void main(String[] args) throws IOException{
         
