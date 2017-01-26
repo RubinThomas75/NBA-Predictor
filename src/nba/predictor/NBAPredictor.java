@@ -40,6 +40,7 @@ public class NBAPredictor extends Application{
             static Integer teamAPlayerIndex[] = new Integer[10];
             static Integer teamBPlayerIndex[] = new Integer[10]; 
             static ArrayList<String> teamList = new ArrayList<String>();
+            static ArrayList<String> teamListAbv = new ArrayList<String>();
             
 
     public static void readData() throws FileNotFoundException{
@@ -180,7 +181,6 @@ public class NBAPredictor extends Application{
         
         return toReturn;
         
-        
     }
     /*
         Method to regress player statistics on individual +/-  score
@@ -317,11 +317,11 @@ public class NBAPredictor extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
        primaryStage.setTitle("NBA - Predictor");         
-       primaryStage.show(); 
        
        Pane mainPane = new Pane();
        Label awayTeam = new Label("Away Team");
        Label homeTeam = new Label("Home Team");
+       Label atLabel = new Label("@");
        
        readInTeamList();  //to Populate choiceboxes
        
@@ -331,18 +331,26 @@ public class NBAPredictor extends Application{
         ChoiceBox<String> homeTeams = new ChoiceBox<>();
         homeTeams.getItems().addAll(teamList);
         
-        awayTeams.setTranslateX(100);
-        awayTeams.setTranslateY(100);
-        homeTeams.setTranslateX(300);
-        homeTeams.setTranslateY(100);
+        awayTeams.setTranslateX(50);
+        awayTeams.setTranslateY(50);
+        homeTeams.setTranslateX(330);
+        homeTeams.setTranslateY(50);
         
+        awayTeam.setTranslateX(50);
+        homeTeam.setTranslateX(330);
+        awayTeam.setTranslateY(20);
+        homeTeam.setTranslateY(20);
         
+        atLabel.setTranslateX(290);
+        atLabel.setTranslateY(55);
         
         mainPane.getChildren().addAll(awayTeams, homeTeams);
-        Scene mainScene = new Scene(mainPane, 1000, 1000);
+        mainPane.getChildren().addAll(awayTeam, homeTeam, atLabel);
+        Scene mainScene = new Scene(mainPane, 600, 120);
+        
         
         primaryStage.setScene(mainScene);
-                
+        primaryStage.show(); 
     }
     
     public void readInTeamList() throws FileNotFoundException{
@@ -352,6 +360,14 @@ public class NBAPredictor extends Application{
         for(int i = 0; i < 30; i++){
             String line = in.nextLine();
             teamList.add(line);
+        }
+        
+        File teamListAbvFile = new File("data/teamListAbv.txt");
+        in = new Scanner(teamListAbvFile);           //Set Scanner for inputting team variables
+        
+        for(int i = 0; i < 30; i++){
+            String line = in.nextLine();
+            teamListAbv.add(line);
         }
       
     }
