@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import java.lang.Math;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -356,6 +357,7 @@ public class NBAPredictor extends Application{
         mainPane.getChildren().addAll(awayTeam, homeTeam, atLabel, go);
         Scene mainScene = new Scene(mainPane, 680, 120);
         
+        
         go.setOnAction(e-> 
             {
            try {
@@ -398,8 +400,9 @@ public class NBAPredictor extends Application{
         Stage infoStage = new Stage();
         infoStage.setTitle("Prediction");
         Pane infoPane = new Pane();
-        Scene infoScene = new Scene(infoPane, 200, 200);
+        Scene infoScene = new Scene(infoPane, 700, 200);
         
+        /* ERROR HANDLING STUFF HERE.
         if(teamA.equals(teamB)){
             Label warning = new Label("A team cannot verse it self; ABORTING");
             infoPane.getChildren().add(warning);
@@ -411,6 +414,9 @@ public class NBAPredictor extends Application{
                 System.exit(0)
             );            
         }
+        
+        */
+        
         //AlgoStart
         
         readData(); 
@@ -436,8 +442,9 @@ public class NBAPredictor extends Application{
         int teamAy = 0, teamBy = 0;
         
         for(int i = 0; i < 30; i++){
-            if(teamScore[i][0].equals(teamA))
+            if(teamScore[i][0].equals(teamA)){
                 teamAx = i;
+            }
             else if(teamScore[i][0].equals(teamB))
                 teamBx = i;
             
@@ -447,15 +454,17 @@ public class NBAPredictor extends Application{
                 teamBy = i;
             
         }
-       
+        
         int teamDiff = teamAx - teamBx;
         int playerDiff = teamAy - teamBy;
         
-        double teamProb = 50 + (teamDiff * 1.7);
-        double playerProb = 50 + (playerDiff * 1.7);
-        
-        Label one = new Label("According to current team statistics, The " + teamA + " has a " + teamProb + "% Chance of winning");
-        Label two = new Label("According to current player statistics, The " + teamA + " has a " + playerProb + "% Chance of winning");
+        double teamProb = 50 + (teamDiff * -1.7);
+        double playerProb = 50 + (playerDiff * -1.7);
+       
+        DecimalFormat df = new DecimalFormat("#.####");
+
+        Label one = new Label("According to current team statistics, The " + teamA + " has a " + df.format(teamProb) + "% Chance of winning");
+        Label two = new Label("According to current player statistics, The " + teamA + " has a " + df.format(playerProb) + "% Chance of winning");
         
         one.setTranslateX(20);
         one.setTranslateY(20);
@@ -472,11 +481,17 @@ public class NBAPredictor extends Application{
         else
             win = true;
         
+        Label finalLabel;
         if(win == true)
-            System.out.println("I predict The " + teamA + " will win with " + lastProb +"% confidence");
+            finalLabel = new Label("I predict The " + teamA + " will win with " + df.format(lastProb) +"% confidence");
         else
-            System.out.println("I predict the " + teamB + " will win with " + (100.0 - lastProb) +"% confidence");
+            finalLabel = new Label("I predict the " + teamB + " will win with " + df.format((100.0 - lastProb)) +"% confidence");
             
+        finalLabel.setTranslateX(20);
+        finalLabel.setTranslateY(90);
+        infoPane.getChildren().add(finalLabel);
+        
+        
         infoStage.setScene(infoScene);
         infoStage.show();
         

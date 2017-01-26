@@ -1,7 +1,7 @@
 Atlanta Hawks
 Boston Celtics
 Brooklyn Nets
-Charlotte Bobcats
+Charlotte Hornets
 Chicago Bulls
 Cleveland Cavaliers
 Dallas Mavericks
@@ -16,7 +16,7 @@ Memphis Grizzlies
 Miami Heat
 Milwaukee Bucks
 Minnesota Timberwolves
-New Orleans Hornets
+New Orleans Pelicans
 New York Knicks
 Oklahoma City Thunder
 Orlando Magic
