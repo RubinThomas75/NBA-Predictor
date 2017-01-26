@@ -13,12 +13,15 @@ import java.util.Scanner;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //Quick GUI stuff
 import javafx.stage.Stage;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -319,12 +322,14 @@ public class NBAPredictor extends Application{
        primaryStage.setTitle("NBA - Predictor");         
        
        Pane mainPane = new Pane();
+       
+       Button go = new Button("Predict");
        Label awayTeam = new Label("Away Team");
        Label homeTeam = new Label("Home Team");
        Label atLabel = new Label("@");
        
        readInTeamList();  //to Populate choiceboxes
-       
+
         ChoiceBox<String> awayTeams = new ChoiceBox<>();
         awayTeams.getItems().addAll(teamList);
         
@@ -344,14 +349,29 @@ public class NBAPredictor extends Application{
         atLabel.setTranslateX(290);
         atLabel.setTranslateY(55);
         
+        go.setTranslateX(580);
+        go.setTranslateY(50);
+        
         mainPane.getChildren().addAll(awayTeams, homeTeams);
-        mainPane.getChildren().addAll(awayTeam, homeTeam, atLabel);
-        Scene mainScene = new Scene(mainPane, 600, 120);
+        mainPane.getChildren().addAll(awayTeam, homeTeam, atLabel, go);
+        Scene mainScene = new Scene(mainPane, 680, 120);
         
-        
+        go.setOnAction(e-> 
+            {
+           try {
+               predict(awayTeams.getValue(), homeTeams.getValue());
+           } catch (FileNotFoundException ex) {
+               Logger.getLogger(NBAPredictor.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+        );
+                
         primaryStage.setScene(mainScene);
         primaryStage.show(); 
     }
+    
+        
+        
     
     public void readInTeamList() throws FileNotFoundException{
         File teamListFile = new File("data/teamList.txt");
@@ -372,7 +392,27 @@ public class NBAPredictor extends Application{
       
     }
     
-    public static void calculate()  throws FileNotFoundException {
+    public static void predict(String teamA, String teamB)  throws FileNotFoundException {
+        
+        //SETTING UP GUI STUFF FOR POP UP WINDOW
+        Stage infoStage = new Stage();
+        infoStage.setTitle("Prediction");
+        Pane infoPane = new Pane();
+        Scene infoScene = new Scene(infoPane, 200, 200);
+        
+        if(teamA.equals(teamB)){
+            Label warning = new Label("A team cannot verse it self; ABORTING");
+            infoPane.getChildren().add(warning);
+            Button aborting = new Button("OK");
+            infoPane.getChildren().add(aborting);
+            aborting.setTranslateX(30);
+            aborting.setTranslateY(30);
+            aborting.setOnAction(e->
+                System.exit(0)
+            );            
+        }
+        //AlgoStart
+        
         readData(); 
         String[][] teamScore = scoreTeams();
         String[][] playerScore = scorePlayers();       
@@ -391,8 +431,6 @@ public class NBAPredictor extends Application{
         //Heres where I will Prompt input for Team 1 and Team 2
         //Now I need to collect the data for team 1 and team 2\
         
-        String teamA = "Oklahoma City Thunder";
-        String teamB = "Memphis Grizzlies";
         
         int teamAx = 0, teamBx = 0;
         int teamAy = 0, teamBy = 0;
@@ -416,8 +454,15 @@ public class NBAPredictor extends Application{
         double teamProb = 50 + (teamDiff * 1.7);
         double playerProb = 50 + (playerDiff * 1.7);
         
-        System.out.println("According to current team statistics, The " + teamA + " has a " + teamProb + "% Chance of winning");
-        System.out.println("According to current player statistics, The " + teamA + " has a " + playerProb + "% Chance of winning");
+        Label one = new Label("According to current team statistics, The " + teamA + " has a " + teamProb + "% Chance of winning");
+        Label two = new Label("According to current player statistics, The " + teamA + " has a " + playerProb + "% Chance of winning");
+        
+        one.setTranslateX(20);
+        one.setTranslateY(20);
+        two.setTranslateX(20);
+        two.setTranslateY(50);
+        
+        infoPane.getChildren().addAll(one, two);
         
         double lastProb = (teamProb + playerProb)/2;
         
@@ -432,8 +477,8 @@ public class NBAPredictor extends Application{
         else
             System.out.println("I predict the " + teamB + " will win with " + (100.0 - lastProb) +"% confidence");
             
-        
-        
+        infoStage.setScene(infoScene);
+        infoStage.show();
         
         
       ////  **try multiplying by 1.7

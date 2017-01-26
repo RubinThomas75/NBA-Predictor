@@ -76,10 +76,17 @@ public class scraper {
                     lossCounterHome++;     
         }
         
-        homePerc = winCounterHome/(winCounterHome + lossCounterHome);
-        roadPerc = winCounterAway/(winCounterAway + lossCounterAway);
+        homePerc = (double)winCounterHome/(winCounterHome + lossCounterHome);
+        roadPerc = (double)winCounterAway/(winCounterAway + lossCounterAway);
     }
     
+    public double getHomePerc(){
+        return homePerc;
+    }
+    
+    public double getRoadPerc(){
+        return roadPerc;
+    }
 
     
 }
