@@ -30,6 +30,7 @@ public class scraper {
      */
     String teamAbv;
     double roadPerc;
+    double homePerc;
     ArrayList<String> awayOrHome = new ArrayList<String>();
     ArrayList<String> winloss = new ArrayList<String>();
 
@@ -38,7 +39,8 @@ public class scraper {
     public scraper(String teamName, List teamList, List abv) throws IOException{
         teamAbv = (String)abv.get(teamList.indexOf(teamName));
         Document doc = parseHTML();
-        roadPerc = calc(doc);
+        setPerc(doc);
+        
     }
     
     public Document parseHTML() throws IOException{
@@ -49,23 +51,35 @@ public class scraper {
         return doc;
     }
     
-    public double calc(Document doc){
+    public void setPerc(Document doc){
+        Elements els = doc.select("td[data-stat = game_location]"); // a with href
+        for(Element el: els)
+            awayOrHome.add(el.text());
         
-        return 0;
-    }
-    
-    public static void main(String[] args) throws IOException{
+        els = doc.select("td[data-stat = game_result]");
+        for(Element el: els)
+            winloss.add(el.text());
         
-        Document doc;
-        doc = Jsoup.connect("http://www.basketball-reference.com/teams/GSW/2017/gamelog/").get();
-        Elements links = doc.select("td[data-stat = game_location]"); // a with href
-        for(Element link: links){
-            if(link.text().equals("@"))
-                continue;
-            System.out.println(link.text());
+        int winCounterHome = 0, winCounterAway = 0;
+        int lossCounterHome = 0, lossCounterAway = 0;
+        
+        for(int i = 0; i < winloss.size(); i++){
+            if(awayOrHome.get(i).equals("@"))
+                if(winloss.get(i).equals("W"))
+                    winCounterAway++;
+                else
+                    lossCounterAway++;
+            else
+                if(winloss.get(i).equals("W"))
+                    winCounterHome++;
+                else
+                    lossCounterHome++;     
         }
         
-
+        homePerc = winCounterHome/(winCounterHome + lossCounterHome);
+        roadPerc = winCounterAway/(winCounterAway + lossCounterAway);
     }
+    
+
     
 }
