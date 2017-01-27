@@ -88,7 +88,7 @@ public class NBAPredictor extends Application{
         }
         
          //READING IN PLAYER STATISTICS *************************************************************************
-         File playerStat = new File("data/playerStats.txt");
+         File playerStat = new File("data/playerStats2.txt");
          in = new Scanner(playerStat);
          
          for(int i = 0; i < 446; i++){
@@ -161,6 +161,7 @@ public class NBAPredictor extends Application{
         SimpleRegression sr = new SimpleRegression();
         
         /*
+        Attempt at Standardizing the numbers for more accurate prediction values 
         double ysum = 0, ySD = 0, ymean = 0;
              for(int i = 0; i < 30; i++)
                  ysum+= Double.parseDouble(teams[i][1]);
@@ -208,7 +209,10 @@ public class NBAPredictor extends Application{
 
            return toReturn;
     }
-    
+    /*
+        SUPER INEFFICIENT METHOD...
+        NEED TO FIX THIS...
+    */
     public static Integer[] getPlayerIndex(String team){
         
         Integer[] toReturn = new Integer[10];
@@ -226,21 +230,32 @@ public class NBAPredictor extends Application{
                 teamIndex = i;
         }
         
-        int oneOrTwo = 0;
+        int numLettersInInitial = 0;
         for(int x = 1; x < 11; x++){
-            String temp2[] = teamRosters[teamIndex][x].split(" ");
-            oneOrTwo = temp2[0].length() - 1;
+            String temp2[] = teamRosters[teamIndex][x].split(" ");          //GET BOTH NAMES from TEAM ROSTER
+            numLettersInInitial = temp2[0].length() - 1;                              //The length of the first name from the roster - 1. SO 
+                                                                            // FOR EXAMPLE: JR SMITH = one or two would be two.
+                                                                                       // Or MARC. MORRIS = one or two would be four.
+            String nameToCheck = temp2[0] + " " +  temp2[1];               //string nameToCheck is firstname space lastname
             
-            String nameToCheck = temp2[0] + " " +  temp2[1];
             for(int i = 0; i <446; i++){
-               String temp3[] = playerStats[i][0].split(" |-");
-               
-               if(temp3[0].length() < oneOrTwo)
+               String temp3[] = playerStats[i][0].split("\\s|-");
+               //NENE CASE
+               if(temp3[0].equals("Nene")){
+                   if(nameToCheck.equals("N. Hilario")){
+                        toReturn[x-1] = i;
+                        break;
+                    }
+                 continue;
+               }
+
+               if(temp3[0].length() < numLettersInInitial)
                    continue;
                
-               String firstInitial = temp3[0].substring(0, oneOrTwo);
-               String fullName = firstInitial + ". " + temp3[1];
-                       
+               String firstInitial = temp3[0].substring(0, numLettersInInitial);
+               String fullName = "" ;
+                   fullName = firstInitial + ". " + temp3[1];
+
                if(fullName.equals(nameToCheck))
                    toReturn[x-1] = i;
                
@@ -274,8 +289,9 @@ public class NBAPredictor extends Application{
         String playerScores[][] = new String[30][2];
         for(int i = 0; i < 30; i++){
             Integer x[] = getPlayerIndex(teams[i][0]);
+            
             playerScores[i][0] = teams[i][0];
-            playerScores[i][1] = Double.toString(getPlayerScore(x));
+           playerScores[i][1] = Double.toString(getPlayerScore(x));
         }
         playerScores = sort(playerScores);
         return playerScores;
@@ -329,7 +345,11 @@ public class NBAPredictor extends Application{
        Label homeTeam = new Label("Home Team");
        Label atLabel = new Label("@");
        
-       readInTeamList();  //to Populate choiceboxes
+       readInTeamList();  //to Populate choiceboxes and for SCRAPER uses
+
+       scraper s = new scraper("Golden State Warriors", teamList, teamListAbv);
+       System.out.println(s.getHeadToHeadPerc("Golden State Warriors", "New York Knicks"));
+       System.exit(0);
 
         ChoiceBox<String> awayTeams = new ChoiceBox<>();
         awayTeams.getItems().addAll(teamList);

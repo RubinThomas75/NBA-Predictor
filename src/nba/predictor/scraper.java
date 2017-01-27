@@ -31,24 +31,27 @@ public class scraper {
     String teamAbv;
     double roadPerc;
     double homePerc;
+    List<String> abvCopy = new ArrayList<String>();
+    List<String> teamCopy = new ArrayList<String>();   
     ArrayList<String> awayOrHome = new ArrayList<String>();
     ArrayList<String> winloss = new ArrayList<String>();
+    ArrayList<String> oppID = new ArrayList<String>();
+    Document doc;
 
     public scraper(){};
     
     public scraper(String teamName, List teamList, List abv) throws IOException{
         teamAbv = (String)abv.get(teamList.indexOf(teamName));
-        Document doc = parseHTML();
+        abvCopy = abv;
+        teamCopy = teamList;
+        parseHTML();
         setPerc(doc);
         
     }
     
-    public Document parseHTML() throws IOException{
+    public void parseHTML() throws IOException{
         String URL = "http://www.basketball-reference.com/teams/" + teamAbv + "/2017/gamelog/";
-
-        Document doc;
         doc = Jsoup.connect(URL).get();
-        return doc;
     }
     
     public void setPerc(Document doc){
@@ -80,6 +83,29 @@ public class scraper {
         roadPerc = (double)winCounterAway/(winCounterAway + lossCounterAway);
     }
     
+    public double getHeadToHeadPerc(String teamA, String teamB){
+       Elements els = doc.select("td[data-stat = opp_id]");
+       for(Element el: els)
+            oppID.add(el.text());
+       
+       String oppABV = (String)abvCopy.get(teamCopy.indexOf(teamB));
+       int winCounter = 0, lossCounter = 0, gameCounter = 0;
+       
+       for(int i = 0; i < oppID.size(); i++){
+           if(oppID.get(i).equals(oppABV)){
+               gameCounter++;
+               if(winloss.get(i).equals("W"))
+                   winCounter++;
+               else
+                   lossCounter++;
+           }
+       }
+       
+       if(gameCounter == 0)
+           return 0;
+       
+       return (double)winCounter/gameCounter;
+    }
     public double getHomePerc(){
         return homePerc;
     }
